@@ -13,8 +13,11 @@ These connectors are largely built into the cost of the services they protect, a
      - [Windows devices in Defender for Endpoint](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-endpoints?view=o365-worldwide) - Windows 7+, Windows Server 2008 R2+
      - [Defender for Endpoint on Mac](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-mac?view=o365-worldwide) - macOS 10.15+ (Catalina)
      - [Defender for Endpoint on Linux](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-linux?view=o365-worldwide) - Debian 9+, Ubuntu 16.04+, RHEL6+, SLES12+, CentOS6+, OEL7+, Fedora33+
+     
         
      This is the lowest cost way per device to get baseline monitoring in place.
+   - [Identity Sensor](https://docs.microsoft.com/en-us/microsoft-365/security/defender-identity/sensor-health?view=o365-worldwide#add-a-sensor) - Install on all domain controllers and ADFS servers
+     - [RADIUS Accounting](https://docs.microsoft.com/en-us/microsoft-365/security/defender-identity/vpn-integration?view=o365-worldwide) - Capture 802.1X events via RADIUS accounting traffic forwarded to Identity Sensors (VPNs, wireless, 802.1X ports)
 1. [Azure Activity log](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log#send-to-log-analytics-workspace) - Comprehensive Azure service monitoring.
 
 
