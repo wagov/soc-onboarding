@@ -1,6 +1,14 @@
 # Microsoft Sentinel Connector Guide
 The below guide has been constructed to prioritise connectors and configuration based on cost and complexity. There are several [free data sources](https://docs.microsoft.com/en-us/azure/sentinel/billing?tabs=commitment-tier#free-data-sources) for [Microsoft Sentinel](https://docs.microsoft.com/en-us/azure/sentinel/), however the best approach is to connect as much as you can, then monitor costs and [run queries to understand your data ingestion](https://docs.microsoft.com/en-us/azure/sentinel/billing-monitor-costs#run-queries-to-understand-your-data-ingestion) to reduce your costs where possible.
 
+## Sentinel Deployment Notes
+It is recommended to deploy Microsoft Sentinel in the Australia East region. If you have not already done so, you can follow the steps below:
+
+- [Create a Log Analytics Workspace](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace)
+- [Enable Microsoft Sentinel](https://docs.microsoft.com/en-us/azure/sentinel/quickstart-onboard#enable-microsoft-sentinel-)
+
+If you have Log Analytics setup in another region, it is recommended to [move it to Australia East](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/move-workspace-region) where possible, as query performance is reduced when spanning multiple regions, and the majority of existing deployments are in Australia East.
+
 ## High value / low-cost connections
 These connectors are largely built into the cost of the services they protect, and provide a high value in terms of assets protected.
 
@@ -13,7 +21,6 @@ These connectors are largely built into the cost of the services they protect, a
      - [Windows devices in Defender for Endpoint](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-endpoints?view=o365-worldwide) - Windows 7+, Windows Server 2008 R2+
      - [Defender for Endpoint on Mac](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-mac?view=o365-worldwide) - macOS 10.15+ (Catalina)
      - [Defender for Endpoint on Linux](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-linux?view=o365-worldwide) - Debian 9+, Ubuntu 16.04+, RHEL6+, SLES12+, CentOS6+, OEL7+, Fedora33+
-     
         
      This is the lowest cost way per device to get baseline monitoring in place.
    - [Identity Sensor](https://docs.microsoft.com/en-us/microsoft-365/security/defender-identity/sensor-health?view=o365-worldwide#add-a-sensor) - Install on all domain controllers and ADFS servers
