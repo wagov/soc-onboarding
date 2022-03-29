@@ -41,3 +41,8 @@ SecurityAlert
 | where TimeGenerated > ago(7d)
 | summarize count() by ProductName
 ```
+
+## Security events by activity
+```kusto
+SecurityEvent | summarize count() by Activity
+```
