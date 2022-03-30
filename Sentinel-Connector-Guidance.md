@@ -10,22 +10,29 @@ It is recommended to deploy Microsoft Sentinel in the Australia East region. If 
 If you have Log Analytics setup in another region, it is recommended to [move it to Australia East](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/move-workspace-region) where possible, as query performance is reduced when spanning multiple regions, and the majority of existing deployments are in Australia East.
 
 ## High value / low-cost connections
-These connectors are largely built into the cost of the services they protect, and provide a high value in terms of assets protected.
+These connectors are largely built into the cost of the services they protect, and provide a high value in terms of assets protected. Some additional context is provided on how to best configure and onboard devices and services, however only **the emphasised steps** need to be completed to establish a baseline SIEM environment.
 
 1. [**Connect Azure Active Directory (Azure AD)**](https://docs.microsoft.com/en-us/azure/sentinel/connect-azure-active-directory) - Identity management logs
    - [Audit logs, Sign-in logs, Provisioning logs, Risky users logs, Risk detections logs](https://docs.microsoft.com/en-us/azure/active-directory/reports-monitoring/howto-integrate-activity-logs-with-log-analytics#send-logs-to-azure-monitor)
 1. [**Turn on Microsoft 365 Defender**](https://docs.microsoft.com/en-us/microsoft-365/security/defender/m365d-enable?view=o365-worldwide) - this includes Office 365, Endpoint, Identity and Cloud Apps
-   1. [**Protect against Threats using Defender for Office 365**](https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/protect-against-threats?view=o365-worldwide) - aim to use Exchange Online and SharePoint Online for email & file services
+   1. [**Protect against Threats using Defender for Office 365**](https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/protect-against-threats?view=o365-worldwide) to align with the [ACSC Essential Eight Maturity Model](https://www.cyber.gov.au/acsc/view-all-content/publications/essential-eight-maturity-model)
+      - Use Exchange Online and SharePoint Online for all staff email & file services
       - [Integrate with Defender for Endpoint](https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/integrate-office-365-ti-with-mde?view=o365-worldwide)
-   1. [**Configure Microsoft Defender for Endpoint in Intune**](https://docs.microsoft.com/en-us/mem/intune/protect/advanced-threat-protection-configure) - aim to use Intune for endpoint management
-      - Windows, macOS and Linux servers should be onboarded into Microsoft 365 Defender for Endpoint unless they are separately sending the above data to Sentinel via another connector (e.g. [Microsoft Defender for Cloud](https://docs.microsoft.com/en-us/azure/sentinel/connect-defender-for-cloud) or [Container Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview))
+   1. [**Configure Microsoft Defender for Endpoint in Intune**](https://docs.microsoft.com/en-us/mem/intune/protect/advanced-threat-protection-configure)
+      - Use Intune for endpoint management and mobile device management
+      - Windows, macOS and Linux servers should also be onboarded into Microsoft 365 Defender for Endpoint unless they are separately sending the above data to Sentinel via another connector (e.g. [Microsoft Defender for Cloud](https://docs.microsoft.com/en-us/azure/sentinel/connect-defender-for-cloud) or [Container Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-overview))
       - [Windows devices in Defender for Endpoint](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-endpoints?view=o365-worldwide) - Windows 7+, Windows Server 2008 R2+
       - [Defender for Endpoint on Mac](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-mac?view=o365-worldwide) - macOS 10.15+ (Catalina)
       - [Defender for Endpoint on Linux](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint-linux?view=o365-worldwide) - Debian 9+, Ubuntu 16.04+, RHEL6+, SLES12+, CentOS6+, OEL7+, Fedora33+
+      - Where possible, deploy the Endpoint security baselines to align with the [ACSC Essential Eight Maturity Model](https://www.cyber.gov.au/acsc/view-all-content/publications/essential-eight-maturity-model)
+        - [Security Baseline for Windows 10 and later](https://docs.microsoft.com/en-us/mem/intune/protect/security-baseline-settings-mdm-all)
+        - [Microsoft Defender for Endpoint baseline](https://docs.microsoft.com/en-us/mem/intune/protect/security-baseline-settings-defender-atp)
+        - [Microsoft Edge Baseline](https://docs.microsoft.com/en-us/mem/intune/protect/security-baseline-settings-edge)
             
       This is the lowest cost way per device to get baseline monitoring in place.
    1. [**Install Identity Sensors**](https://docs.microsoft.com/en-us/microsoft-365/security/defender-identity/sensor-health?view=o365-worldwide#add-a-sensor) - Install on all domain controllers and ADFS servers
-      - [RADIUS Accounting](https://docs.microsoft.com/en-us/microsoft-365/security/defender-identity/vpn-integration?view=o365-worldwide) - Capture 802.1X events via RADIUS accounting traffic forwarded to Identity Sensors (VPNs, wireless, 802.1X ports)
+      - This is only relevant where on-premise Active Directory syncs to Azure AD, if entirely using Azure AD this is not required
+      - [Configure RADIUS Accounting on 802.1X networks & VPNs](https://docs.microsoft.com/en-us/microsoft-365/security/defender-identity/vpn-integration?view=o365-worldwide) - Capture 802.1X events via RADIUS accounting traffic forwarded to Identity Sensors (VPNs, wireless, 802.1X ports)
    1. [**Integrate Defender for Cloud Apps**](https://docs.microsoft.com/en-us/defender-cloud-apps/mde-integration)
    1. [**Connect Microsoft 365 Defender**](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE#connect-to-microsoft-365-defender) to collect events from [Defender for Office 365](https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/defender-for-office-365?view=o365-worldwide#getting-started) and Defender for Endpoint
       - Enable collection of events from all Advanced Hunting tables (e.g. [Device...](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE) and [Email...](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDO))
