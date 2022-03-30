@@ -28,7 +28,7 @@ These connectors are largely built into the cost of the services they protect, a
       - [RADIUS Accounting](https://docs.microsoft.com/en-us/microsoft-365/security/defender-identity/vpn-integration?view=o365-worldwide) - Capture 802.1X events via RADIUS accounting traffic forwarded to Identity Sensors (VPNs, wireless, 802.1X ports)
    1. [**Integrate Defender for Cloud Apps**](https://docs.microsoft.com/en-us/defender-cloud-apps/mde-integration)
    1. [**Connect Microsoft 365 Defender**](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE#connect-to-microsoft-365-defender) to collect events from [Defender for Office 365](https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/defender-for-office-365?view=o365-worldwide#getting-started) and Defender for Endpoint
-      - Enable collection of events from all Advanced Hunting tables (e.g. [Device*](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE) and [Email*](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDO))
+      - Enable collection of events from all Advanced Hunting tables (e.g. [Device...](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDE) and [Email...](https://docs.microsoft.com/en-us/azure/sentinel/connect-microsoft-365-defender?tabs=MDO))
 1. [**Connect Azure Activity log**](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log#send-to-log-analytics-workspace) - Comprehensive Azure service monitoring.
 
 
