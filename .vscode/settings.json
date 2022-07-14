@@ -1,0 +1,17 @@
+{
+    "markdown.extension.toc.levels": "2..6",
+    "markdownConverter.ConversionType": [
+        "PDF",
+        "HTML"
+    ],
+    "markdownConverter.Document.Paper.PaperFormat": {
+        "Format": "A4"
+    },
+    "markdownConverter.Document.HeaderContent": {
+        "Center": "{{ ChangeDate }}"
+    },
+    "markdownConverter.Document.FooterContent": {
+        "Center": "",
+        "Right": "<span class=\"pageNumber\"></span>/<span class=\"totalPages\"></span>"
+    }
+}

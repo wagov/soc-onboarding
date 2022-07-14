@@ -1,6 +1,12 @@
 # soc-onboarding
 WA SOC 2.0 onboarding scripts and documentation
 
+## Documentation
+
+The handy [Sentinel Connector Guidance](Sentinel-Connector-Guidance.md) can be viewed online or downloaded as a PDF below:
+- [Sentinel Connector Guidance (HTML, Online)](https://wagov.github.io/soc-onboarding/Sentinel-Connector-Guidance.html)
+- [Sentinel Connector Guidance (PDF)](https://wagov.github.io/soc-onboarding/static/Sentinel-Connector-Guidance.pdf)
+
 ## Target Architecture
 
 This repository should contains a bootstrap ARM template and script to launch an ACI instance under a managed identity which uses the `mcr.microsoft.com/azure-cli` container to undertake a sequence of azure cli tasks to complete a full onboarding/connection process.
