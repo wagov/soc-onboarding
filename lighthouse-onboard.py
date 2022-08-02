@@ -129,6 +129,9 @@ if __name__ == "__main__":
             group = existing[0]
         params[f"{role}group"] = name
         params[f"{role}id"] = group["id"]
+    
+    print("Generated parameters short form below:")
+    print(json.dumps(params, indent=2))
 
     params_json = json.loads(params_template.substitute(params))
 
