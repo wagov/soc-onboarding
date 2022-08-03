@@ -42,6 +42,7 @@ if __name__ == "__main__":
       "type": "Microsoft.ManagedServices/registrationDefinitions",
       "apiVersion": "2020-02-01-preview",
       "name": "[guid('$offername')]",
+      "location": "Australia East",
       "properties": {
         "registrationDefinitionName": "$offername",
         "description": "$offername",
@@ -91,6 +92,7 @@ if __name__ == "__main__":
       "type": "Microsoft.ManagedServices/registrationAssignments",
       "apiVersion": "2020-02-01-preview",
       "name": "[guid('$offername')]",
+      "location": "Australia East",
       "dependsOn": [
         "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
       ],
