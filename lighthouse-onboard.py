@@ -30,82 +30,83 @@ if __name__ == "__main__":
 
     arm_template = Template(
         """
+{
+  "$$schema": "https://schema.management.azure.com/schemas/2019-08-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "variables": {
+    "mspRegistrationName": "[guid('$offername')]",
+    "mspAssignmentName": "[guid('$offername')]"
+  },
+  "resources": [
     {
-    "$$schema": "https://schema.management.azure.com/schemas/2019-08-01/subscriptionDeploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "variables": {
-        "mspRegistrationName": "[guid('$offername')]",
-        "mspAssignmentName": "[guid('$offername')]"
+      "type": "Microsoft.ManagedServices/registrationDefinitions",
+      "apiVersion": "2020-02-01-preview",
+      "name": "[guid('$offername')]",
+      "properties": {
+        "registrationDefinitionName": "$offername",
+        "description": "$offername",
+        "managedByTenantId": "$mssptenantid",
+        "authorizations": [
+          {
+            "principalId": "$advisorid",
+            "principalIdDisplayName": "$advisorgroup",
+            "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+          },
+          {
+            "principalId": "$monitorid",
+            "principalIdDisplayName": "$monitorgroup",
+            "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+          },
+          {
+            "principalId": "$monitorid",
+            "principalIdDisplayName": "$monitorgroup",
+            "roleDefinitionId": "ab8e14d6-4a74-4a29-9ba8-549422addade"
+          },
+          {
+            "principalId": "$monitorid",
+            "principalIdDisplayName": "$monitorgroup",
+            "roleDefinitionId": "fb1c8493-542b-48eb-b624-b4c8fea62acd"
+          }
+        ],
+        "eligibleAuthorizations": [
+          {
+            "justInTimeAccessPolicy": {
+              "multiFactorAuthProvider": "Azure",
+              "maximumActivationDuration": "PT4H",
+              "managedByTenantApprovers": [
+                {
+                  "principalId": "$approverid",
+                  "principalIdDisplayName": "$approvergroup"
+                }
+              ]
+            },
+            "principalId": "$adminid",
+            "principalIdDisplayName": "$admingroup",
+            "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+          }
+        ]
+      }
     },
-    "resources": [
-        {
-            "type": "Microsoft.ManagedServices/registrationDefinitions",
-            "apiVersion": "2020-02-01-preview",
-            "name": "[guid('$offername')]",
-            "properties": {
-                "registrationDefinitionName": "$offername",
-                "description": "$offername",
-                "managedByTenantId": "$mssptenantid",
-                "authorizations": [
-                    {
-                        "principalId": "$advisorid",
-                        "principalIdDisplayName": "$advisorgroup",
-                        "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
-                    },
-                    {
-                        "principalId": "$monitorid",
-                        "principalIdDisplayName": "$monitorgroup",
-                        "roleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
-                    },
-                    {
-                        "principalId": "$monitorid",
-                        "principalIdDisplayName": "$monitorgroup",
-                        "roleDefinitionId": "ab8e14d6-4a74-4a29-9ba8-549422addade"
-                    },
-                    {
-                        "principalId": "$monitorid",
-                        "principalIdDisplayName": "$monitorgroup",
-                        "roleDefinitionId": "fb1c8493-542b-48eb-b624-b4c8fea62acd"
-                    }
-                    
-                ],
-                "eligibleAuthorizations": { 
-                            "justInTimeAccessPolicy": { 
-                                "multiFactorAuthProvider": "Azure", 
-                                "maximumActivationDuration": "PT4H",
-                                "managedByTenantApprovers": [ 
-                                    { 
-                                        "principalId": "$approverid", 
-                                        "principalIdDisplayName": "$approvergroup" 
-                                    } 
-                                ] 
-                            },
-                            "principalId": "$adminid", 
-                            "principalIdDisplayName": "$admingroup",
-                            "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"  
-                    }
-            }
-        },
-        {
-            "type": "Microsoft.ManagedServices/registrationAssignments",
-            "apiVersion": "2020-02-01-preview",
-            "name": "[guid('$offername')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
-            ],
-            "properties": {
-                "registrationDefinitionId": "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
-            }
-        }
-    ],
-    "outputs": {
-        "mspOfferName": {
-            "type": "string",
-            "value": "[concat('Managed by', ' ', '$offername')]"
-        }
+    {
+      "type": "Microsoft.ManagedServices/registrationAssignments",
+      "apiVersion": "2020-02-01-preview",
+      "name": "[guid('$offername')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
+      ],
+      "properties": {
+        "registrationDefinitionId": "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
+      }
     }
+  ],
+  "outputs": {
+    "mspOfferName": {
+      "type": "string",
+      "value": "[concat('Managed by', ' ', '$offername')]"
+    }
+  }
 }
-    """
+"""
     )
 
     for role, suffix in group_suffixes.items():
@@ -145,13 +146,13 @@ if __name__ == "__main__":
             group = existing[0]
         params[f"{role}group"] = name
         params[f"{role}id"] = group["id"]
-    
+
     print("Generated parameters short form below:")
     print(json.dumps(params, indent=2))
 
     arm_deployment_json = json.loads(arm_template.substitute(params))
 
-    if len(sys.argv) > 2: # 2nd arg is target file for json
+    if len(sys.argv) > 2:  # 2nd arg is target file for json
         json.dump(arm_deployment_json, open(sys.argv[2], "w"), indent=2)
     else:
         print(json.dumps(arm_deployment_json, indent=2))
