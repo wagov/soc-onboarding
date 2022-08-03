@@ -6,7 +6,7 @@ from subprocess import check_output
 if __name__ == "__main__":
     """
     Prereqs: Run scoped to the tenant and subscription that contains the Azure AD directory, and is intended to be the parent lighthouse instance for the destination tenant.
-    Usage: ./lighthouse-onboard.py CODENAME codename-params.json
+    Usage: ./lighthouse-onboard.py CODENAME codename-armdeployment.json
 
     The above will create templated groups in Azure AD and generate a lighthouse params file that can be deployed to the customers
     """
@@ -28,23 +28,25 @@ if __name__ == "__main__":
 
     print(f"Creating and checking groups for {agency} onboarding...")
 
-    params_template = Template(
+    arm_template = Template(
         """
     {
-        "$$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentParameters.json#",
-        "contentVersion": "1.0.0.0",
-        "parameters": {
-            "mspOfferName": {
-                "value": "$offername"
-            },
-            "mspOfferDescription": {
-                "value": "$offername"
-            },
-            "managedByTenantId": {
-                "value": "$mssptenantid"
-            },
-            "authorizations": {
-                "value": [
+    "$$schema": "https://schema.management.azure.com/schemas/2019-08-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "variables": {
+        "mspRegistrationName": "[guid('$offername')]",
+        "mspAssignmentName": "[guid('$offername')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ManagedServices/registrationDefinitions",
+            "apiVersion": "2020-02-01-preview",
+            "name": "[guid('$offername')]",
+            "properties": {
+                "registrationDefinitionName": "$offername",
+                "description": "$offername",
+                "managedByTenantId": "$mssptenantid",
+                "authorizations": [
                     {
                         "principalId": "$advisorid",
                         "principalIdDisplayName": "$advisorgroup",
@@ -66,11 +68,8 @@ if __name__ == "__main__":
                         "roleDefinitionId": "fb1c8493-542b-48eb-b624-b4c8fea62acd"
                     }
                     
-                ]
-            },
-            "eligibleAuthorizations":{
-                "value": [ 
-                    { 
+                ],
+                "eligibleAuthorizations": { 
                             "justInTimeAccessPolicy": { 
                                 "multiFactorAuthProvider": "Azure", 
                                 "maximumActivationDuration": "PT4H",
@@ -85,10 +84,27 @@ if __name__ == "__main__":
                             "principalIdDisplayName": "$admingroup",
                             "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"  
                     }
-                ]    
+            }
+        },
+        {
+            "type": "Microsoft.ManagedServices/registrationAssignments",
+            "apiVersion": "2020-02-01-preview",
+            "name": "[guid('$offername')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
+            ],
+            "properties": {
+                "registrationDefinitionId": "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
             }
         }
+    ],
+    "outputs": {
+        "mspOfferName": {
+            "type": "string",
+            "value": "[concat('Managed by', ' ', '$offername')]"
+        }
     }
+}
     """
     )
 
@@ -133,9 +149,9 @@ if __name__ == "__main__":
     print("Generated parameters short form below:")
     print(json.dumps(params, indent=2))
 
-    params_json = json.loads(params_template.substitute(params))
+    arm_deployment_json = json.loads(arm_template.substitute(params))
 
-    if len(sys.argv) > 2:
-        json.dump(params_json, open(sys.argv[2], "w"), indent=2)
+    if len(sys.argv) > 2: # 2nd arg is target file for json
+        json.dump(arm_deployment_json, open(sys.argv[2], "w"), indent=2)
     else:
-        print(json.dumps(params_json, indent=2))
+        print(json.dumps(arm_deployment_json, indent=2))
