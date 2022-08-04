@@ -40,7 +40,7 @@ As part of onboarding, the WA SOC will send the customer a prefilled [Azure Ligh
 
 ### 1.2. Microsoft 365 tenant access
 
-As part of onboarding, the WA SOC will send the customer a list of analysts (Tier 0 and Tier 1) or privileged approvers (Tier 2) to be delegated specific access in the customers  Azure AD Tenant. This process needs to be undertaken for each Azure AD Tenant the customer would like to delegate access to.
+As part of onboarding, the WA SOC will send the customer a list of analysts (in csv format) to be delegated specific access in the customers  Azure AD Tenant. This process needs to be undertaken for each Azure AD Tenant the customer would like to delegate access to.
 
 ## 2. Onboarding Process
 
