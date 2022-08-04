@@ -19,13 +19,20 @@ Company: "github.com/wagov/soc-onboarding"
 
 ## 1. Overview
 
-There are 2 delegations of access an operational security team would need to assist a customer with managing their security events and detection rules. Our customer offerings below have been constructed around the type of assistance required:
+There are 2 delegations of access an operational security team would need to assist a customer with managing their security events and detection rules. Our customer offerings below have been constructed around the type of ongoing access and assistance required:
 
 - **Tier 0 - Monitor:** Ability for automation and analyst accounts to read security incidents, alerts, event data and azure subscription resources.
-- **Tier 1 - Advisor:** Increased access to work on security incidents and detection rules ontop of **Tier 0**.
-- **Tier 2 - Detect & Respond:** A privileged identity management approach to allow for administrative access during incident response and planned changes (security improvements) ontop of **Tier 1**.
+  - Microsoft 365 Tenant (Azure AD) Role: [Security Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#security-reader)
+  - Azure Subscription Role: [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#microsoft-sentinel-reader)
+- **Tier 1 - Advisor:** Increased access for analysts to work on security incidents and detection rules ontop of **Tier 0**.
+  - Microsoft 365 Tenant (Azure AD) Role: [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
+  - Azure Subscription Roles: [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#reader), [Microsoft Sentinel Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#microsoft-sentinel-contributor), [Security Admin](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#security-admin)
 
-Note for Tier 2 customers, the WA SOC will reach out and complete onboarding activities on the customer's behalf once initial admin access has been delegated.
+Note for Tier 2 customers, the WA SOC will reach out and complete onboarding activities, including the configuration of [Azure AD Privileged Identity Management](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) (PIM) on the customer's behalf once initial admin access has been delegated. There are no further steps in this document to follow for Tier 2 customers.
+
+- **Tier 2 - Detect & Respond:** A modern privileged identity management approach to allow for administrative access during incident response and planned changes (security improvements) ontop of **Tier 1**.
+  - Microsoft 365 Tenant (Azure AD) Role: [Global Administrator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#global-administrator) via PIM, day to day same as **Tier 1**
+  - Azure Subscription Role: [Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor) eligible via PIM, day to day same as **Tier 1**
 
 ### 1.1. Azure Subscription access
 
