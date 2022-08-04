@@ -3,66 +3,95 @@ Title: "WA SOC Onboarding"
 Author: "WA Security Operations Centre"
 Company: "github.com/wagov/soc-onboarding"
 ---
+# WA SOC Onboarding Procedure
 
-# WA SOC Onboarding Guidance
+- [1. Overview](#1-overview)
+  - [1.1. Azure Subscription access](#11-azure-subscription-access)
+  - [1.2. Microsoft 365 tenant access](#12-microsoft-365-tenant-access)
+- [2. Onboarding Process](#2-onboarding-process)
+  - [2.1. Prerequisites](#21-prerequisites)
+  - [2.2. Microsoft 365 tenant access delegation](#22-microsoft-365-tenant-access-delegation)
+    - [2.2.1. Tier 0 Azure AD Group](#221-tier-0-azure-ad-group)
+    - [2.2.2. Tier 1 Azure AD Group](#222-tier-1-azure-ad-group)
+  - [2.3. Azure Subscription access delegation](#23-azure-subscription-access-delegation)
+    - [2.3.1. Azure Lighthouse ARM Deployment](#231-azure-lighthouse-arm-deployment)
+- [3. Confirmation of Onboarding](#3-confirmation-of-onboarding)
 
-## 1. Onboarding Templates
+## 1. Overview
 
-When commencing the onboarding process, the WA SOC will provide you with prefilled [Temaplates](https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#create-your-template-manually) that will initiate a [Azure Lighthouse](https://docs.microsoft.com/en-us/azure/lighthouse/overview) connection between the customer Azure Tenant and the WA SOC Tenant. Once completed the WA SOC can start to provide SOC servcies to customers.
+There are 2 delegations of access an operational security team would need to assist a customer with managing their security events and detection rules. Our customer offerings below have been constructed around the type of assistance required:
 
-Dependant on the SOC service tier that the customer have sign onto - It is recommended to onboard to the WA SOC via the following [methods](#2-onboarding-tiers).
+- **Tier 0 - Monitor:** Ability for automation and analyst accounts to read security incidents, alerts, event data and azure subscription resources.
+- **Tier 1 - Advisor:** Increased access to work on security incidents and detection rules ontop of **Tier 0**.
+- **Tier 2 - Detect & Respond:** A privileged identity management approach to allow for administrative access during incident response and planned changes (security improvements) ontop of **Tier 1**.
+
+Note for Tier 2 customers, the WA SOC will reach out and complete onboarding activities on the customer's behalf once initial admin access has been delegated.
+
+### 1.1. Azure Subscription access
+
+As part of onboarding, the WA SOC will send the customer a prefilled [Azure Lighthouse ARM Deployment](https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#create-your-template-manually) that can be installed as an **Service provider offer** to initiate an [Azure Lighthouse](https://docs.microsoft.com/en-us/azure/lighthouse/overview) connection between the customer Azure Subscription and the WA SOC Tenant. Once completed the WA SOC can delegate relevant permissions to analysts and automation processes via privileged groups in the WA SOC tenant, allowing it to service the customers Azure subscription. This process needs to be undertaken for each subscription the customer would like to delegate access to.
+
+### 1.2. Microsoft 365 tenant access
+
+As part of onboarding, the WA SOC will send the customer a list of analysts (Tier 0 and Tier 1) or privileged approvers (Tier 2) to be delegated specific access in the customers  Azure AD Tenant. This process needs to be undertaken for each Azure AD Tenant the customer would like to delegate access to.
 
 ## 2. Onboarding Process
-----
 
-### Prerequisite
+### 2.1. Prerequisites
 
-> [Global Admin](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#global-administrator) permission required for the Azure Tenant
+- [Global Admin](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#global-administrator) permission required for the Azure AD Tenant and associated Azure Subscriptions.
+  - [Access to Service provider offers](https://portal.azure.com/#view/Microsoft_Azure_CustomerHub/ServiceProvidersBladeV2/~/providers) in the Azure Portal
+  - [Access to Azure Active Directory Groups](https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupsManagementMenuBlade/~/AllGroups) in the Azure Portal
 
-## 2.1 Tier 0 & Tier 1 Customers
----
+### 2.2. Microsoft 365 tenant access delegation
 
-Onboarding on the WA SOC as a Tier 0 or Tier 1 customer can be complete quite easily via the [Portal](https://docs.microsoft.com/en-us/azure/lighthouse/overview) method.
+As a first step invite the `wasoc-analyst-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
 
-**2.1.1** From the Service providers page in the Azure portal, select Server provider offers.
+![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
 
-**2.1.2** Near the top of the screen, select the arrow next to Add offer, and then select Add via template.
+Once thats done [create an Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) as per the below templates.
+
+![Create Group](images/azuread-wasocgroup.png)
+
+#### 2.2.1. Tier 0 Azure AD Group
+
+Create an Azure AD group as follows. Any future changes to membership will be requested by the WA SOC.
+
+- **Group type:** Security
+- **Group name:** WASOC-T0-Advisor
+- **Group description:** WASOC Tier 0 Advisor Access (Security Reader)
+- **Azure AD roles can be assigned:** Yes
+- **Members:** Each email address imported from `wasoc-analyst-invites.csv`
+- **Roles:** [Security Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#security-reader)
+
+#### 2.2.2. Tier 1 Azure AD Group
+
+Create an Azure AD group as follows. Any future changes to membership will be requested by the WA SOC.
+
+- **Group type:** Security
+- **Group name:** WASOC-T1-Monitor
+- **Group description:** WASOC Tier 1 Monitor Access (Security Operator)
+- **Azure AD roles can be assigned:** Yes
+- **Members:** Each email address imported from `wasoc-analyst-invites.csv`
+- **Roles:** [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
+
+### 2.3. Azure Subscription access delegation
+
+The Azure subscription access can be delegated via the [Azure Portal](https://docs.microsoft.com/en-us/azure/lighthouse/overview).
+
+Navigate to the [Azure Lighthouse - Service Providers](https://portal.azure.com/#view/Microsoft_Azure_CustomerHub/ServiceProvidersBladeV2/~/providers) page in the Azure portal, and select the arrow next to Add offer, and then select Add via template.
 
 ![service Provider](/images/Service-Provider.png)
 
-**2.1.3** Upload the template by dragging and dropping it, or select Browse for files to find and upload the template.
+#### 2.3.1. Azure Lighthouse ARM Deployment
+
+Browse for the template provided, and click **Upload**. This can be customised to removed unused groups if desired for the customers Tier - please inform the WA SOC of any changes prior to deployment to allow documentation to be updated.
 
 ![Upload Template](/images/Upload-Template.png)
-
-**2.1.4** After you've uploaded your template, select Upload.
-
-**2.1.5** In the Custom deployment screen, review the details that appear. If needed, you can make changes to these location of the template deployment (Australia East is default).
-
-**2.1.6** Select Review and create, then select Create.
-
-## 2.2 Tier 2 Customers
----
-
-**2.2.1** Apply same steps mentioned for [lower tier customers](#21-tier-0--tier-1-customers)
-
-Further information will be provided to customers for further onboarding instructions
-
-> [!NOTE]
-> For all customers - It may take up to 15 minutes after your deployment is complete before the updates are reflected in the Azure portal.
-
+Review the custom deployment details and ensure the location is Australia East, then click **Review and create** then click **Create**.
 
 ## 3. Confirmation of Onboarding
 
-Once the template phase has completed, cusotmers can confirm the onboarding process has finalised by checking the following:
-
-**3.1** Navigate to the Service providers page.
-
-**3.2** Select Service provider offers.
-
-**3.3** Confirm that you can see the WA SOC service offer.
+Once the template phase has completed, cusotmers can confirm the onboarding process has finalised by navigating to the [Azure Lighthouse - Service Providers](https://portal.azure.com/#view/Microsoft_Azure_CustomerHub/ServiceProvidersBladeV2/~/providers) page and confirming you can see the **WA SOC - Security Insights** service offer.
 
 ![service Offer](/images/service-offer.png)
-
-
-
-
