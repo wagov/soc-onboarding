@@ -13,6 +13,7 @@ Company: "github.com/wagov/soc-onboarding"
   - [2.2. Microsoft 365 tenant access delegation](#22-microsoft-365-tenant-access-delegation)
     - [2.2.1. Tier 0 Azure AD Group & Defender for Endpoint Roles](#221-tier-0-azure-ad-group--defender-for-endpoint-roles)
     - [2.2.2. Tier 1 Azure AD Group & Defender for Endpoint Roles](#222-tier-1-azure-ad-group--defender-for-endpoint-roles)
+    - [2.2.3. Group and role assignment walkthrough](#223-group-and-role-assignment-walkthrough)
   - [2.3. Azure Subscription access delegation](#23-azure-subscription-access-delegation)
     - [2.3.1. Azure Lighthouse ARM Deployment](#231-azure-lighthouse-arm-deployment)
 - [3. Confirmation of Onboarding](#3-confirmation-of-onboarding)
@@ -52,17 +53,7 @@ As part of onboarding, the WA SOC will send the customer a list of analysts (in 
 
 ### 2.2. Microsoft 365 tenant access delegation
 
-As a first step invite the `wasoc-analyst-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
-
-![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
-
-Once thats done [create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with Azure AD roles assigned.
-
-![Create Group](images/azuread-wasocgroup.png)
-
-Finally assign the [Defender for Endpoint roles](https://security.microsoft.com/preferences2/user_roles) to the above group.
-
-![Endpoint Role](images/wasoc-endpointrole.png) ![Endpoint Group](images/wasoc-endpointgroup.png)
+The below Azure AD group and Defender for Endpoint roles grant permissions required from the customer tenant to the WA SOC analysts. Once you have reviewed the roles themselves please implement using the [2.2.3. Group and role assignment walkthrough](#223-group-and-role-assignment-walkthrough).
 
 #### 2.2.1. Tier 0 Azure AD Group & Defender for Endpoint Roles
 
@@ -97,6 +88,22 @@ Create a Defender for Endpoint role as follows. This will inherit from the above
 - **Role Name:** WASOC-T1-Monitor
 - **Permissions:** View Data (all), Active remediation actions (all), Alerts investigation
 - **Assigned user groups:** WASOC-T1-Monitor
+
+#### 2.2.3. Group and role assignment walkthrough
+
+As a first step invite the `wasoc-analyst-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
+
+![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
+
+Once thats done [create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with Azure AD roles assigned.
+
+![Create Group](images/azuread-wasocgroup.png)
+
+Finally assign the [Defender for Endpoint roles](https://security.microsoft.com/preferences2/user_roles) to the above group.
+
+![Endpoint Role](images/wasoc-endpointrole.png) ![Endpoint Group](images/wasoc-endpointgroup.png)
+
+
 
 ### 2.3. Azure Subscription access delegation
 
