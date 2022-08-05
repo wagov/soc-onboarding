@@ -61,7 +61,7 @@ Create an Azure AD group as follows. Any future changes to membership will be re
 
 - **Group type:** Security
 - **Group name:** WASOC-T0-Advisor
-- **Group description:** WASOC Tier 0 Advisor Access (Security Reader)
+- **Group description:** WASOC Tier 0 Advisor Access (Global Reader)
 - **Azure AD roles can be assigned:** Yes
 - **Members:** Each email address imported from `wasoc-analyst-invites.csv`
 - **Roles:** [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader)
