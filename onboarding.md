@@ -11,8 +11,8 @@ Company: "github.com/wagov/soc-onboarding"
 - [2. Onboarding Process](#2-onboarding-process)
   - [2.1. Prerequisites](#21-prerequisites)
   - [2.2. Microsoft 365 tenant access delegation](#22-microsoft-365-tenant-access-delegation)
-    - [2.2.1. Tier 0 Azure AD Group](#221-tier-0-azure-ad-group)
-    - [2.2.2. Tier 1 Azure AD Group](#222-tier-1-azure-ad-group)
+    - [2.2.1. Tier 0 Azure AD Group & Defender for Endpoint Roles](#221-tier-0-azure-ad-group--defender-for-endpoint-roles)
+    - [2.2.2. Tier 1 Azure AD Group & Defender for Endpoint Roles](#222-tier-1-azure-ad-group--defender-for-endpoint-roles)
   - [2.3. Azure Subscription access delegation](#23-azure-subscription-access-delegation)
     - [2.3.1. Azure Lighthouse ARM Deployment](#231-azure-lighthouse-arm-deployment)
 - [3. Confirmation of Onboarding](#3-confirmation-of-onboarding)
@@ -56,11 +56,15 @@ As a first step invite the `wasoc-analyst-invites.csv` into your [Azure AD direc
 
 ![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
 
-Once thats done [create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) for the customers specific Tier as per the below templates.
+Once thats done [create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with Azure AD roles assigned.
 
 ![Create Group](images/azuread-wasocgroup.png)
 
-#### 2.2.1. Tier 0 Azure AD Group
+Finally assign the [Defender for Endpoint roles](https://security.microsoft.com/preferences2/user_roles) to the above group.
+
+![Endpoint Role](images/wasoc-endpointrole.png) ![Endpoint Group](images/wasoc-endpointgroup.png)
+
+#### 2.2.1. Tier 0 Azure AD Group & Defender for Endpoint Roles
 
 Create an Azure AD group as follows. Any future changes to membership will be requested by the WA SOC.
 
@@ -71,7 +75,13 @@ Create an Azure AD group as follows. Any future changes to membership will be re
 - **Members:** Each email address imported from `wasoc-analyst-invites.csv`
 - **Roles:** [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader)
 
-#### 2.2.2. Tier 1 Azure AD Group
+Create a Defender for Endpoint role as follows. This will inherit from the above group to ensure membership changes stay in sync.
+
+- **Role Name:** WASOC-T0-Advisor
+- **Permissions:** View Data (all)
+- **Assigned user groups:** WASOC-T0-Advisor
+
+#### 2.2.2. Tier 1 Azure AD Group & Defender for Endpoint Roles
 
 Create an Azure AD group as follows. Any future changes to membership will be requested by the WA SOC.
 
@@ -81,6 +91,12 @@ Create an Azure AD group as follows. Any future changes to membership will be re
 - **Azure AD roles can be assigned:** Yes
 - **Members:** Each email address imported from `wasoc-analyst-invites.csv`
 - **Roles:** [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader) and [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
+
+Create a Defender for Endpoint role as follows. This will inherit from the above group to ensure membership changes stay in sync.
+
+- **Role Name:** WASOC-T1-Monitor
+- **Permissions:** View Data (all), Active remediation actions (all), Alerts investigation
+- **Assigned user groups:** WASOC-T1-Monitor
 
 ### 2.3. Azure Subscription access delegation
 
