@@ -56,7 +56,7 @@ As a first step invite the `wasoc-analyst-invites.csv` into your [Azure AD direc
 
 ![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
 
-Once thats done [create an Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) as per the below templates.
+Once thats done [create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) for the customers specific Tier as per the below templates.
 
 ![Create Group](images/azuread-wasocgroup.png)
 
