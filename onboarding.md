@@ -37,9 +37,13 @@ Note for Tier 2 customers, the WA SOC will reach out and complete onboarding act
 
 ### 1.1. Azure Subscription access
 
+![Sentinel Access](images/sentinel-incident.png)
+
 As part of onboarding, the WA SOC will send the customer a prefilled [Azure Lighthouse ARM Deployment](https://docs.microsoft.com/en-us/azure/lighthouse/how-to/onboard-customer#create-your-template-manually) that can be installed as an **Service provider offer** to initiate an [Azure Lighthouse](https://docs.microsoft.com/en-us/azure/lighthouse/overview) connection between the customer Azure Subscription and the WA SOC Tenant. Once completed the WA SOC can delegate relevant permissions to analysts and automation processes via privileged groups in the WA SOC tenant, allowing it to service the customers Azure subscription. This process needs to be undertaken for each subscription the customer would like to delegate access to.
 
 ### 1.2. Microsoft 365 tenant access
+
+![Defender 365](images/DefenderEndpoint.png)
 
 As part of onboarding, the WA SOC will send the customer a list of analysts (in csv format) to be delegated specific access in the customers  Azure AD Tenant. This process needs to be undertaken for each Azure AD Tenant the customer would like to delegate access to.
 
@@ -53,7 +57,8 @@ As part of onboarding, the WA SOC will send the customer a list of analysts (in 
 
 ### 2.2. Microsoft 365 tenant access delegation
 
-The below Azure AD group and Defender for Endpoint roles grant permissions required from the customer tenant to the WA SOC analysts. Once you have reviewed the roles themselves please implement using the [2.2.3. Group and role assignment walkthrough](#223-group-and-role-assignment-walkthrough).
+The below Azure AD group and Defender for Endpoint roles grant permissions required from the customer tenant to the WA SOC analysts. Once you have reviewed the roles themselves please implement using the [2.2.3. Group and role assignment walkthrough](#223-group-and-role-assignment-walkthrough). 
+> Note that the Defender for Endpoint role assignment is only required if you have enabled [Manage portal access using role-based access control](https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/rbac?view=o365-worldwide#before-you-begin) in [Defender for Endpoint](https://security.microsoft.com/preferences2/user_roles).
 
 #### 2.2.1. Tier 0 Azure AD Group & Defender for Endpoint Roles
 
@@ -91,19 +96,14 @@ Create a Defender for Endpoint role as follows. This will inherit from the above
 
 #### 2.2.3. Group and role assignment walkthrough
 
-As a first step invite the `wasoc-analyst-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
+The group names and role names below can be set to anything you prefer, however for consistency we recommend using the templated names above.
 
-![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
-
-Once thats done [create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with Azure AD roles assigned.
-
-![Create Group](images/azuread-wasocgroup.png)
-
-Finally assign the [Defender for Endpoint roles](https://security.microsoft.com/preferences2/user_roles) to the above group.
-
-![Endpoint Role](images/wasoc-endpointrole.png) ![Endpoint Group](images/wasoc-endpointgroup.png)
-
-
+1. Invite the `wasoc-analyst-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
+   - ![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
+1. [Create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with the above invited analysts as members and documented Azure AD roles assigned.
+   - ![Create Group](images/azuread-wasocgroup.png)
+1. Assign the [Defender for Endpoint roles](https://security.microsoft.com/preferences2/user_roles) to the above group to add Defender for Endpoint access if you have enabled role based access control.
+   - ![Endpoint Role](images/wasoc-endpointrole.png) ![Endpoint Group](images/wasoc-endpointgroup.png)
 
 ### 2.3. Azure Subscription access delegation
 
