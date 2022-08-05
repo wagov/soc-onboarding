@@ -22,10 +22,10 @@ Company: "github.com/wagov/soc-onboarding"
 There are 2 delegations of access an operational security team would need to assist a customer with managing their security events and detection rules. Our customer offerings below have been constructed around the type of ongoing access and assistance required:
 
 - **Tier 0 - Monitor:** Ability for automation and analyst accounts to read security incidents, alerts, event data and azure subscription resources.
-  - Microsoft 365 Tenant (Azure AD) Role: [Security Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#security-reader)
+  - Microsoft 365 Tenant (Azure AD) Role: [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader)
   - Azure Subscription Role: [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#microsoft-sentinel-reader)
 - **Tier 1 - Advisor:** Increased access for analysts to work on security incidents and detection rules ontop of **Tier 0**.
-  - Microsoft 365 Tenant (Azure AD) Role: [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
+  - Microsoft 365 Tenant (Azure AD) Roles: [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader), [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
   - Azure Subscription Roles: [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#reader), [Microsoft Sentinel Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#microsoft-sentinel-contributor), [Security Admin](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#security-admin)
 
 Note for Tier 2 customers, the WA SOC will reach out and complete onboarding activities, including the configuration of [Azure AD Privileged Identity Management](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) (PIM) on the customer's behalf once initial admin access has been delegated. There are no further steps in this document to follow for Tier 2 customers.
@@ -69,7 +69,7 @@ Create an Azure AD group as follows. Any future changes to membership will be re
 - **Group description:** WASOC Tier 0 Advisor Access (Security Reader)
 - **Azure AD roles can be assigned:** Yes
 - **Members:** Each email address imported from `wasoc-analyst-invites.csv`
-- **Roles:** [Security Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#security-reader)
+- **Roles:** [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader)
 
 #### 2.2.2. Tier 1 Azure AD Group
 
@@ -80,7 +80,7 @@ Create an Azure AD group as follows. Any future changes to membership will be re
 - **Group description:** WASOC Tier 1 Monitor Access (Security Operator)
 - **Azure AD roles can be assigned:** Yes
 - **Members:** Each email address imported from `wasoc-analyst-invites.csv`
-- **Roles:** [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
+- **Roles:** [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader) and [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
 
 ### 2.3. Azure Subscription access delegation
 
