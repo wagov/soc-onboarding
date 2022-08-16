@@ -99,11 +99,16 @@ Create a Defender for Endpoint role as follows. This will inherit from the above
 The group names and role names below can be set to anything you prefer, however for consistency we recommend using the templated names above.
 
 1. Invite the `wasoc-analyst-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
-   - ![Bulk Invite](images/azuread-bulkinvite.png) ![Bulk Invite 2](images/azuread-bulkinvite2.png)
-1. [Create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with the above invited analysts as members and documented Azure AD roles assigned.
-   - ![Create Group](images/azuread-wasocgroup.png)
-1. Assign the [Defender for Endpoint roles](https://security.microsoft.com/preferences2/user_roles) to the above group to add Defender for Endpoint access if you have enabled role based access control.
-   - ![Endpoint Role](images/wasoc-endpointrole.png) ![Endpoint Group](images/wasoc-endpointgroup.png)
+
+![Bulk Invite](images/bulk-invite.gif)
+
+2. [Create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with the above invited analysts as members and documented Azure AD roles assigned.
+
+![Create Group](images/azuread-wasocgroup.gif)
+
+3. Assign the [Defender for Endpoint roles](https://security.microsoft.com/preferences2/user_roles) to the above group to add Defender for Endpoint access if you have enabled role based access control.
+  
+![Endpoint Role](images/wasoc-endpointrole.gif)
 
 ### 2.3. Azure Subscription access delegation
 
