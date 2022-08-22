@@ -22,18 +22,13 @@ Company: "github.com/wagov/soc-onboarding"
 
 There are 2 delegations of access an operational security team would need to assist a customer with managing their security events and detection rules. Our customer offerings below have been constructed around the type of ongoing access and assistance required:
 
-- **Tier 0 - Monitor:** Ability for automation and analyst accounts to read security incidents, alerts, event data and azure subscription resources.
+- **Tier 0 - Advisor:** Ability for automation accounts to read security incidents, alerts, identity and device information, event data, and azure subscription resources.
   - Microsoft 365 Tenant (Azure AD) Role: [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader)
-  - Azure Subscription Role: [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#microsoft-sentinel-reader)
-- **Tier 1 - Advisor:** Increased access for analysts to work on security incidents and detection rules ontop of **Tier 0**.
+  - Azure Subscription Role: [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#reader)
+- **Tier 1 - Monitor:** Increased access for analysts to work on security incidents and detection rules ontop of **Tier 0**.
   - Microsoft 365 Tenant (Azure AD) Roles: [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader), [Security Operator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#security-operator)
   - Azure Subscription Roles: [Reader](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#reader), [Microsoft Sentinel Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#microsoft-sentinel-contributor), [Security Admin](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#security-admin)
-
-Note for Tier 2 customers, the WA SOC will reach out and complete onboarding activities, including the configuration of [Azure AD Privileged Identity Management](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) (PIM) on the customer's behalf once initial admin access has been delegated. There are no further steps in this document to follow for Tier 2 customers.
-
-- **Tier 2 - Detect & Respond:** A modern privileged identity management approach to allow for administrative access during incident response and planned changes (security improvements) ontop of **Tier 1**.
-  - Microsoft 365 Tenant (Azure AD) Role: [Global Administrator](https://docs.microsoft.com/en-us/azure/active-directory/roles/permissions-reference#global-administrator) via PIM, day to day same as **Tier 1**
-  - Azure Subscription Role: [Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor) eligible via PIM, day to day same as **Tier 1**
+  - Optional configuration of [Azure AD Privileged Identity Management](https://docs.microsoft.com/en-us/azure/active-directory/privileged-identity-management/pim-configure) (PIM) for elevated access to resources during critical incident response or service configuration activities (required under **Tier 2**).
 
 ### 1.1. Azure Subscription access
 
@@ -68,7 +63,7 @@ Create an Azure AD group as follows. Any future changes to membership will be re
 - **Group name:** WASOC-T0-Advisor
 - **Group description:** WASOC Tier 0 Advisor Access (Global Reader)
 - **Azure AD roles can be assigned:** Yes
-- **Members:** Each email address imported from `wasoc-analyst-invites.csv`
+- **Members:** Each email address imported from `wasoc-automation-invites.csv`
 - **Roles:** [Global Reader](https://docs.microsoft.com/en-au/azure/active-directory/roles/permissions-reference#global-reader)
 
 Create a Defender for Endpoint role as follows. This will inherit from the above group to ensure membership changes stay in sync.
@@ -98,11 +93,11 @@ Create a Defender for Endpoint role as follows. This will inherit from the above
 
 The group names and role names below can be set to anything you prefer, however for consistency we recommend using the templated names above.
 
-1. Invite the `wasoc-analyst-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
+1. Invite the `wasoc-...-invites.csv` into your [Azure AD directory](https://portal.azure.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/AllUsers).
 
 ![Bulk Invite](images/bulk-invite.gif)
 
-2. [Create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with the above invited analysts as members and documented Azure AD roles assigned.
+2. [Create a single Azure AD Group](https://portal.azure.com/#view/Microsoft_AAD_IAM/AddGroupBlade) with the above invited automation accounts / analysts as members and documented Azure AD roles assigned.
 
 ![Create Group](images/azuread-wasocgroup.gif)
 
