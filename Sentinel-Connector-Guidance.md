@@ -58,6 +58,7 @@ Align with the [ACSC Essential Eight Maturity Model](https://www.cyber.gov.au/ac
 
 ![Defender for Office 365](images/Defender365.png)
 
+- Start with [Microsoft Defender for Office 365 step-by-step guides](https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/step-by-step-guides/step-by-step-guide-overview?view=o365-worldwide) if unfamiliar with the Defender for Office 365 platform
 - Use Exchange Online and SharePoint Online for all staff email & file services
 - [Integrate with Defender for Endpoint](https://docs.microsoft.com/en-us/microsoft-365/security/office-365-security/integrate-office-365-ti-with-mde?view=o365-worldwide)
 
