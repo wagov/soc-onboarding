@@ -119,6 +119,7 @@ Navigate to the [Azure Lighthouse - Service Providers](https://portal.azure.com/
 Browse for the template provided, and click **Upload**. This can be customised to removed unused groups if desired for the customers Tier - please inform the WA SOC of any changes prior to deployment to allow documentation to be updated.
 
 ![Upload Template](/images/Upload-Template.png)
+
 Review the custom deployment details and ensure the location is Australia East, then click **Review and create** then click **Create**.
 
 ## 3. Confirmation of Onboarding
