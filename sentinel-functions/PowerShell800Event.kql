@@ -26,6 +26,8 @@ EventData
 | parse kind=relaxed EventData_Context with * 'UserId=' UserId "HostName=" *
 | parse kind=relaxed EventData_Context with * 'HostName=' HostName "HostVersion=" *
 | parse kind=relaxed EventData_Context with * 'HostVersion=' HostVersion "HostApplication=" *
+| parse kind=relaxed HostVersion with HostVersion "HostId=" *   //Fixes for HostVersion field non-standard delimiter with HostId
+| parse kind=simple HostVersion with * 'HostId=' HostId         // Fixes for HostId field parsed in non-standard delimiter
 | parse kind=relaxed EventData_Context with * 'HostApplication=' HostApplication "EngineVersion=" *
 | parse kind=relaxed EventData_Context with * 'EngineVersion=' EngineVersion "RunspaceId=" *
 | parse kind=relaxed EventData_Context with * 'RunspaceId=' RunspaceId "PipelineId=" *
