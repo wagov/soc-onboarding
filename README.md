@@ -17,3 +17,7 @@ The handy [Sentinel Connector Guidance](Sentinel-Connector-Guidance.md) can be v
 
 - [Sentinel Connector Guidance (HTML, Online)](https://wagov.github.io/soc-onboarding/Sentinel-Connector-Guidance.html)
 - [Sentinel Connector Guidance (PDF)](https://wagov.github.io/soc-onboarding/static/Sentinel-Connector-Guidance.pdf)
+
+## Making changes
+
+Please fork this repository to suggest changes, and submit a pull request to get approved and merged.
