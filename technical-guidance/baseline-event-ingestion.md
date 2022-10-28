@@ -8,11 +8,11 @@ Most organisations are strategically migrating services not unique to their spec
 
 ![Service Models](../images/servicemodels.png)
 
-The above diagram should be used as a reference when determining what systems it is relevant to capture logs from (i.e. if using IaaS, the service provider logs could be collected in bulk, while if On-Prem then logs would need to be captured from hypervisors, physical servers, storage and physical security).
+The above diagram should be used as a reference to determine which systems/services are relevant for capturing security logs (i.e. if utilising IaaS, the service provider should facilitate the collection of security logs in bulk, while On-Premise infrastructure would require additional resoruces to capture security logs from hypervisors, physical servers, storage and physical security).
 
 ## Detection Observables
 
-The below queries are intended to be completed from a library of [STIX 2.1 Cyber Observable Objects](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v21.observables.html). The list of observables below has been ordered based on feasibility of comprehensive ingestion of all relevant activities external to an organisation.
+Referencing the [STIX 2.1 Cyber Observable Objects](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v2 ) library, the below observables are intended to represent an organisation detection scope of potential threat indicators. The observables objects are ordered based on feasibility of ingestion of all relevant activities external to an organisation.
 
 1. [IPv4Address](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v21.observables.html#stix2.v21.observables.IPv4Address), [IPv6Address](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v21.observables.html#stix2.v21.observables.IPv6Address)
 2. [UserAccount](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v21.observables.html#stix2.v21.observables.UserAccount), [EmailAddress](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v21.observables.html#stix2.v21.observables.EmailAddress)
@@ -20,9 +20,11 @@ The below queries are intended to be completed from a library of [STIX 2.1 Cyber
 4. [EmailMessage](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v21.observables.html#stix2.v21.observables.EmailMessage) (date, subject, from, to most relevant)
 5. [File](https://stix2.readthedocs.io/en/latest/api/v21/stix2.v21.observables.html#stix2.v21.observables.File) (SHA256 hash most relevant)
 
+> Futher information of the purpose of STIX 2.1 and the observable objects can be found [here](https://oasis-open.github.io/cti-documentation/stix/intro.html).
+
 ## Detection Assets
 
-The below is a high level summary of assets from which log information should typically be collected from / about. Subsequent queries will refer to these assets.
+The below is a high level summary of assets and services from where security logs should typically be collected. Subsequent detection queries will refer to these assets.
 
 - **Endpoints** - Devices that users access organisational resources from
 - **Servers** - Hypervisors, Servers, Container Platforms
@@ -31,9 +33,9 @@ The below is a high level summary of assets from which log information should ty
 - **Network Firewalls (Firewalls)** - Network egress and internal network control points
 - **Web Application Firewalls (WAFs)** - Network ingress control points
 
-## Detection Checklist
+# Detection Checklist
 
-To validate the below checklist, calculate the percentage coverage of assets (e.g. 8 / 10 Endpoints == 80% coverage) where the below queries are able to be undertaken by the organisations security analysts for a given log retention window (normally 12 months).
+The below checklist should be undertaken by the organisations security team to calculate the percentage coverage of assets (e.g. 8 / 10 Endpoints == 80% coverage) for a given log retention window (normally 12 months).
 
 - [ ] **Endpoints** - Query a `IPv4Address`, `IPv6Address`, `DomainName` or `URL` across all outbound network traffic.
   - E.g. [Defender Network Protection](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/network-protection?view=o365-worldwide), [Defender Web Protection](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/web-protection-overview?view=o365-worldwide)
@@ -50,4 +52,4 @@ To validate the below checklist, calculate the percentage coverage of assets (e.
 
 ## Detection Analytics
 
-Once the above is validated, an organisation should review its capability to schedule regular detection queries across their environment to detect suspicious behaviour based on threat intelligence feeds, as well as deviations from baseline expected behaviour. A simple example would be determining the subset of users that are allowed to use legacy authentication protocols (NTLM, LDAP, HTTP Basic Auth), and alerting security analysts whenever a user outside of that list attempts to sign in with a legacy authentication protocol.
+Once the above checklist is validated, an organisation should schedule regular security exercises to detect for suspicious behaviour based on indicators collected from threat intelligence soruces and to detect for deviations against known behaviour baselines. A simple example would be to determine a subset of users that are allowed to use legacy authentication protocols (NTLM, LDAP, HTTP Basic Auth), and alerting security analysts whenever a user outside of that list attempts to sign in with a legacy authentication protocol.
