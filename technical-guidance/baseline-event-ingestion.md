@@ -9,7 +9,7 @@
   - [4.3. High return on investment](#43-high-return-on-investment)
 - [5. Detection Analytics](#5-detection-analytics)
 
-This document and associated checklist is intended to be used as a high-level self assesment to determine coverage quality of an operational SIEM environment for a typical organisation.
+This document and associated checklist is intended to be used as a high-level self assessment to determine coverage quality of an operational SIEM environment for a typical organisation.
 
 ## 1. Service Model Context
 
