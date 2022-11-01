@@ -13,11 +13,4 @@ curl https://raw.githubusercontent.com/wagov/soc-onboarding/main/lighthouse-onbo
 
 ## Sentinel Documentation
 
-The handy [Sentinel Connector Guidance](Sentinel-Connector-Guidance.md) can be viewed online or downloaded as a PDF below:
-
-- [Sentinel Connector Guidance (HTML, Online)](https://wagov.github.io/soc-onboarding/Sentinel-Connector-Guidance.html)
-- [Sentinel Connector Guidance (PDF)](https://wagov.github.io/soc-onboarding/static/Sentinel-Connector-Guidance.pdf)
-
-## Making changes
-
-Please fork this repository to suggest changes, and submit a pull request to get approved and merged.
+The handy [Sentinel Connector Guidance](https://wagov.github.io/wasocshared/#/onboarding/sentinel-guidance.md) can be viewed online, and printed to a PDF using your browser.
